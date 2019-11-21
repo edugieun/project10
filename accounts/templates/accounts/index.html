@@ -1,11 +1,14 @@
 {% extends 'movies/base.html' %}
 {% block content %}
   <br>
-  <h1 style="font-family: 'Do Hyeon';">유저 목록</h1>
-  {% for user in users %}
-    <a href="{% url 'accounts:detail' user.pk %}" class="btn btn-success">
-      {{ user.username }}
-    </a>
-    <br><br>
+  <h1 class="text-center" style="font-family: 'Do Hyeon';">유저 목록</h1>
+  <ul class="list-group">
+   {% for user in users %}
+    <li class="list-group-item">
+      <a href="{% url 'accounts:detail' user.pk %}" style="font-size: 20px;">
+        {{ user.username }}
+      </a>
+    </li>
   {% endfor %}
+  </ul>
 {% endblock %}
