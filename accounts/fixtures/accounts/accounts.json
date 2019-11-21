@@ -1,18 +1,18 @@
 [
 {
   "model": "accounts.user",
-  "pk": 1,
+  "pk": 2,
   "fields": {
-    "password": "pbkdf2_sha256$150000$AUFUfEZenGgO$1wigh85Qhl7BsKdFH5dYupWi5ItpO+CZrtkX/G6d9M4=",
-    "last_login": "2019-11-21T02:02:36.954Z",
+    "password": "pbkdf2_sha256$150000$2CCBLkmtVsuo$R8lNNKxwO7G1CjiBVCWaiFZQJ/ykDUbepZjO4Bp00MY=",
+    "last_login": null,
     "is_superuser": true,
-    "username": "wally",
+    "username": "admin",
     "first_name": "",
     "last_name": "",
     "email": "",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2019-11-21T01:56:38.556Z",
+    "date_joined": "2019-11-21T02:39:54.105Z",
     "groups": [],
     "user_permissions": [],
     "followers": []

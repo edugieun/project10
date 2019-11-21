@@ -43,3 +43,13 @@ def reviews_delete(request, movie_pk, review_pk):
             review.delete()
         return redirect ('movies:detail', movie_pk)
     return HttpResponse('No movie information', status=404)
+
+
+@login_required
+def like(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    if movie.like_users.filter(pk=request.user.pk).exists():
+        movie.like_users.remove(request.user)
+    else:
+        movie.like_users.add(request.user)
+    return redirect('movies:index')
