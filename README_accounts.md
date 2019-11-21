@@ -265,9 +265,98 @@ class Review(models.Model):
 
 ### 영화 목록
 
+- 영화의 이미지를 클릭하면 `영화 상세보기` 페이지로 이동
+
+```python
+#movies app 의 view.py
+
+def index(request):
+    movies = Movie.objects.all()
+    context = {'movies': movies,}
+    return render(request, 'movies/index.html', context)
+```
+
+```html
+<!-- movies app의 index.html -->
+
+<h1 class="text-center" style="font-family: 'Do Hyeon';">영화 목록</h1>
+<hr>
+<div class="row">
+  {% for movie in movies %} <!-- movies에 있는 movie를 출력 -->
+  <div class="col-sm-6 col-md-4 mb-5">
+    <div class="card">
+      <a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_url}}" class="card-img-top"
+          alt="{{movie.title}}"></a> <!-- movie detail 페이지로 이동 -->
+      <div class="card-body">
+        <h5 class="card-title">{{movie.title}}</h5>
+        <hr>
+        <b>{{ movie.like_users.all|length }}</b>명의 좋아요!
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+```
+
+![image](https://user-images.githubusercontent.com/52685242/69311691-49aa7600-0c70-11ea-80df-6fe24f37a20e.png)
+
 <br>
 
 ### 영화 상세보기
+
+- 영화 관련 정보가 모두 나열
+
+```python
+# movies app의 detail.py
+
+def detail(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    reviews = movie.review_set.all() # reviews 를 출력
+    review_form = ReviewForm()
+    context = {'movie': movie, 'review_form': review_form, 'reviews': reviews,}
+    return render(request, 'movies/detail.html', context)
+```
+
+```html
+<!-- movies app의 detail.html -->
+
+<font color="#3E64E2"><h1 class="text-center" style="font-family: 'Do Hyeon';">영화 정보 조회</h1></font>
+  <br>
+  <table border="2px solid black"> <!-- 영화에 대한 정보를 테이블로 표현 -->
+    <thead>
+      <tr height="30px">
+        <th class="text-center" width="100px">분류</th>
+        <th class="text-center">내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">title</td>
+        <td>{{ movie.title }}</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">audience</td>
+        <td>{{ movie.audience }}</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">genre</td>
+        <td>{% for genre in movie.genre.all %} <!-- 한 영화에 대한 중복으로 설정된 장르들을 출력 -->
+            {{ genre.name }}
+            {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">poster_url</td>
+        <td><a href="{{ movie.poster_url }}" target="_blank">{{ movie.poster_url }}</a></td> <!-- a태그로 웹 페이지로 연결 -->
+      </tr>
+      <tr>
+        <td style="text-align: center;">description</td>
+        <td>{{ movie.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+```
+
+![image](https://user-images.githubusercontent.com/52685242/69307504-2979b780-0c6e-11ea-97ce-04378d583b04.png)
 
 <br>
 
