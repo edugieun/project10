@@ -6,14 +6,17 @@
     {% for review in auth_user.review_set.all %}
       <p>{{ review.content }} || {{ review.score }} </p>
     {% endfor %}
-    ------
+
+    <hr>
     <h3>내가 좋아요한 영화 정보</h3>
     {% for movie in auth_user.like_movies.all %}
       <p>{{ movie.title }}</p>
     {% endfor %}
-    ------
 
     <hr>
     <a href="#">follow 하기</a>
+    {% with followings=person.followings.all followers=person.followers.all %}
+      <p>팔로잉 : {{ followings|length }} / 팔로워 : {{ followers|length }} </p>
+    {% endwith %}
 
 {% endblock  %}
