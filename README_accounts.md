@@ -24,7 +24,7 @@ class User(AbstractUser):
 ```python
 # settings.py
 ...
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.User' # 기본 User모델 재선언
 ```
 
 
@@ -50,15 +50,15 @@ class CustomUserCreationForm(UserCreationForm):
 
 ```python
 def signup(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated: # 로그인이 되어 있는 경우
         return redirect('accounts:index')
-    if request.method == 'POST':
+    if request.method == 'POST': # POST 요청
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
+        if form.is_valid(): # 유효성 검사
+            user = form.save() # user 정보 저장
+            auth_login(request, user) # 로그인
             return redirect('accounts:index')
-    else:
+    else: # GET 요청
         form = CustomUserCreationForm()
     context = {'form': form,}
     return render(request, 'accounts/authform.html', context)
@@ -75,7 +75,7 @@ def signup(request):
   <form action="" method="POST">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <input type="submit" value="ì œì¶œ">
+    <input type="submit" value="제출">
   </form>
 ```
 
@@ -97,8 +97,8 @@ if request.user.is_authenticated:
 ```python
 if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
+        if form.is_valid(): # 유효성 검사
+            auth_login(request, form.get_user()) # 로그인
             return redirect(request.GET.get('next') or 'movies:index')
     else:
         form = AuthenticationForm()
@@ -149,7 +149,7 @@ def logout(request):
 
 ```python
 def index(request):
-    users = get_user_model().objects.all()
+    users = get_user_model().objects.all() 
     context = {'users': users,}
     return render(request, 'accounts/index.html', context)
 ```
