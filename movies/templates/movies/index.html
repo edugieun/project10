@@ -13,20 +13,10 @@
           alt="{{movie.title}}"></a>
       <div class="card-body">
         <h5 class="card-title">{{movie.title}}</h5>
+        <hr>
+        <b>{{ movie.like_users.all|length }}</b>명의 좋아요!
       </div>
     </div>
   </div>
   {% endfor %}
-
-  {% comment %} {% for movie in movies %}
-  <p>제목 : {{ movie.title }}</p>
-  <p>장르 :
-    {% for genre in movie.genre.all %}
-    {{ genre.name }}
-    {% endfor %}
-  </p>
-  <p>관객수 : {{ movie.audience }}</p>
-  <p>poster_url : <a href="{% url 'movies:detail' movie.pk %}">{{ movie.poster_url }}</a></p>
-  <hr>
-  {% endfor %} {% endcomment %}
   {% endblock  %}
