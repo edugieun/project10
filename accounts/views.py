@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from IPython import embed
 
 
 # Create your views here.
@@ -49,6 +50,5 @@ def logout(request):
 
 def detail(request, user_pk):
     auth_user = get_object_or_404(get_user_model(), pk=user_pk)
-    reviews = auth_user.review_set.all()
-    context = {'auth_user': auth_user, 'reviews': reviews,}
+    context = {'auth_user': auth_user,}
     return render(request, 'accounts/detail.html', context)
