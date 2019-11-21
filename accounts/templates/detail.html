@@ -1,0 +1,18 @@
+{% extends 'movies/base.html' %}
+{% block content %}
+  <h1>{{ auth_user }}</h1>
+  {% for review in reviews %}
+
+    <div class="card" style="width: 18rem;">
+      <img src="{{ review.movie.poster_url }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ review.movie.title }}</h5>
+        <p class="card-text">내가 준 평점: {{ review.score }}</p>
+        <a href="{% url 'movies:detail' review.movie.pk %}" class="btn btn-primary">영화 상세보기</a>
+      </div>
+    </div>
+    <hr>
+    <!--<p>팔로잉 : {{  }} / 팔로워  : {{  }}</p>-->
+
+  {% endfor %}
+{% endblock  %}

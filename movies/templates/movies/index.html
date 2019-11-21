@@ -1,0 +1,32 @@
+{% extends 'movies/base.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+<h1 class="text-center" style="font-family: 'Do Hyeon';">영화 목록</h1>
+<hr>
+<div class="row">
+  {% for movie in movies %}
+  <div class="col-sm-6 col-md-4 mb-5">
+    <div class="card">
+      <a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_url}}" class="card-img-top"
+          alt="{{movie.title}}"></a>
+      <div class="card-body">
+        <h5 class="card-title">{{movie.title}}</h5>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% comment %} {% for movie in movies %}
+  <p>제목 : {{ movie.title }}</p>
+  <p>장르 :
+    {% for genre in movie.genre.all %}
+    {{ genre.name }}
+    {% endfor %}
+  </p>
+  <p>관객수 : {{ movie.audience }}</p>
+  <p>poster_url : <a href="{% url 'movies:detail' movie.pk %}">{{ movie.poster_url }}</a></p>
+  <hr>
+  {% endfor %} {% endcomment %}
+  {% endblock  %}

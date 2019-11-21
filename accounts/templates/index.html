@@ -1,0 +1,10 @@
+{% extends 'movies/base.html' %}
+{% block content %}
+  <br>
+  {% for user in users %}
+    <a href="{% url 'accounts:detail' user.pk %}" class="btn btn-success">
+      {{ user.username }}
+    </a>
+    <br><br>
+  {% endfor %}
+{% endblock %}
