@@ -52,4 +52,4 @@ def like(request, movie_pk):
         movie.like_users.remove(request.user)
     else:
         movie.like_users.add(request.user)
-    return redirect('movies:index')
+    return redirect('movies:detail', movie_pk)
