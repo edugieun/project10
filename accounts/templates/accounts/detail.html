@@ -1,17 +1,19 @@
 {% extends 'movies/base.html' %}
 {% block content %}
   <h1>{{ auth_user }}</h1>
-  {% for review in reviews %}
-
-    <div class="card" style="width: 18rem;">
-      <img src="{{ review.movie.poster_url }}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{ review.movie.title }}</h5>
-        <p class="card-text">내가 준 평점: {{ review.score }}</p>
-        <a href="{% url 'movies:detail' review.movie.pk %}" class="btn btn-primary">영화 상세보기</a>
-      </div>
-    </div>
     <hr>
-    {% comment %} <!--<p>팔로잉 : {{  }} / 팔로워  : {{  }}</p>--> {% endcomment %}
- {% endfor %}
+    <h3>내가 작성한 댓글과 평점</h3>
+    {% for review in auth_user.review_set.all %}
+      <p>{{ review.content }} || {{ review.score }} </p>
+    {% endfor %}
+    ------
+    <h3>내가 좋아요한 영화 정보</h3>
+    {% for movie in auth_user.like_movies.all %}
+      <p>{{ movie.title }}</p>
+    {% endfor %}
+    ------
+
+    <hr>
+    <a href="#">follow 하기</a>
+
 {% endblock  %}
