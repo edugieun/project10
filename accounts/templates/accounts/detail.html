@@ -1,21 +1,28 @@
 {% extends 'movies/base.html' %}
 {% block content %}
-  <h1>{{ auth_user }}</h1>
+  <h1 style="font-family: 'Do Hyeon';">{{ auth_user }}님의 정보 상세보기</h1>
+  {% if auth_user != request.user %}
+    {% if request.user in auth_user.followers.all %}
+      <a class="btn btn-info btn-lg" href="{% url 'accounts:follow' auth_user.pk %}" role="button">Unfollow</a>
+    {% else %}
+      <a class="btn btn-primary btn-lg" href="{% url 'accounts:follow' auth_user.pk %}" role="button">Follow</a>
+    {% endif %}
+  {% endif %}
     <hr>
     <h3>내가 작성한 댓글과 평점</h3>
     {% for review in auth_user.review_set.all %}
-      <p>{{ review.content }} || {{ review.score }} </p>
+      <p>{{ review.content }} || {{ review.score }}점 </p>
     {% endfor %}
 
     <hr>
     <h3>내가 좋아요한 영화 정보</h3>
     {% for movie in auth_user.like_movies.all %}
-      <p>{{ movie.title }}</p>
+      <a href="{% url 'movies:detail' movie.pk %}"><p>{{ movie.title }}</p></a>
     {% endfor %}
 
     <hr>
-    <a href="#">follow 하기</a>
-    {% with followings=person.followings.all followers=person.followers.all %}
+    <h3>팔로워 정보</h3>
+    {% with followings=auth_user.followings.all followers=auth_user.followers.all %}
       <p>팔로잉 : {{ followings|length }} / 팔로워 : {{ followers|length }} </p>
     {% endwith %}
 
